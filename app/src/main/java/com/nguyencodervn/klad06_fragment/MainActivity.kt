@@ -47,6 +47,12 @@ class MainActivity : AppCompatActivity() {
                 (!checkBackStack("Fragment01"))
             ) {
                 fm.commit {
+                    setCustomAnimations(
+                        R.anim.slide_in,
+                        R.anim.fade_out,
+                        R.anim.fade_in,
+                        R.anim.slide_out
+                    )
                     setReorderingAllowed(true)
                     add<Fragment01>(R.id.fragment_view, args = bundle)
                     addToBackStack("Fragment01")
@@ -61,6 +67,12 @@ class MainActivity : AppCompatActivity() {
                 (!checkBackStack("Fragment02"))
             ) {
                 fm.commit {
+                    setCustomAnimations(
+                        R.anim.slide_in,
+                        R.anim.fade_out,
+                        R.anim.fade_in,
+                        R.anim.slide_out
+                    )
                     setReorderingAllowed(true)
                     replace<Fragment02>(R.id.fragment_view)
                     addToBackStack("Fragment02")
@@ -75,6 +87,12 @@ class MainActivity : AppCompatActivity() {
                 (!checkBackStack("Fragment03"))
             ) {
                 fm.commit {
+                    setCustomAnimations(
+                        R.anim.slide_in,
+                        R.anim.fade_out,
+                        R.anim.fade_in,
+                        R.anim.slide_out
+                    )
                     setReorderingAllowed(true)
                     replace<Fragment03>(R.id.fragment_view)
                     addToBackStack("Fragment03")
@@ -89,6 +107,12 @@ class MainActivity : AppCompatActivity() {
                 (!checkBackStack("Fragment04"))
             ) {
                 fm.commit {
+                    setCustomAnimations(
+                        R.anim.slide_in,
+                        R.anim.fade_out,
+                        R.anim.fade_in,
+                        R.anim.slide_out
+                    )
                     setReorderingAllowed(true)
                     replace<Fragment04>(R.id.fragment_view)
                     addToBackStack("Fragment04")
