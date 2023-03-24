@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">KLAD06_BackStackFragment</string>
+
+    <string name="fm1">FM01</string>
+    <string name="fm2">FM02</string>
+    <string name="fm3">FM03</string>
+    <string name="fm4">FM04</string>
+
+    <string name="fragment_code_01">Fragment 01</string>
+    <string name="fragment_code_02">Fragment 02</string>
+    <string name="fragment_code_03">Fragment 03</string>
+    <string name="fragment_code_04">Fragment 04</string>
+
+    <string name="next">Next</string>
+    <string name="pop_back">PopBackStack</string>
+    <string name="show_stack">Show Stack</string>
+    <string name="savebackstack">saveBackStack \n FM2</string>
+    <string name="restorebackstack">restoreBackStack \n FM2</string>
+
+</resources>
