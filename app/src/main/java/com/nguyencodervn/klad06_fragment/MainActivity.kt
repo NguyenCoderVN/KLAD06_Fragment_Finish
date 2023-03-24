@@ -1,10 +1,12 @@
 package com.nguyencodervn.klad06_fragment
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -18,7 +20,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var showBackStack: Button
     private lateinit var saveBackStack: Button
     private lateinit var restoreBackStack: Button
-    private lateinit var showTv : TextView
+    private lateinit var showTv: TextView
+    private val fm = supportFragmentManager
 
     companion object {
         const val TAG = "MYTAG"
@@ -39,32 +42,125 @@ class MainActivity : AppCompatActivity() {
         showTv = findViewById(R.id.showTv)
 
         fragment01Bt.setOnClickListener {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add<Fragment01>(R.id.fragment_view)
+            val bundle = bundleOf("text" to "KOTLIN")
+            if (!checkFragment(Fragment01()) &&
+                (!checkBackStack("Fragment01"))
+            ) {
+                fm.commit {
+                    setReorderingAllowed(true)
+                    add<Fragment01>(R.id.fragment_view, args = bundle)
+                    addToBackStack("Fragment01")
+                }
+            } else {
+                showWarning()
             }
         }
 
         fragment02Bt.setOnClickListener {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace<Fragment02>(R.id.fragment_view)
+            if (!checkFragment(Fragment02()) &&
+                (!checkBackStack("Fragment02"))
+            ) {
+                fm.commit {
+                    setReorderingAllowed(true)
+                    replace<Fragment02>(R.id.fragment_view)
+                    addToBackStack("Fragment02")
+                }
+            }else {
+                showWarning()
             }
         }
 
         fragment03Bt.setOnClickListener {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace<Fragment03>(R.id.fragment_view)
+            if (!checkFragment(Fragment03()) &&
+                (!checkBackStack("Fragment03"))
+            ) {
+                fm.commit {
+                    setReorderingAllowed(true)
+                    replace<Fragment03>(R.id.fragment_view)
+                    addToBackStack("Fragment03")
+                }
+            } else {
+                showWarning()
             }
         }
 
         fragment04Bt.setOnClickListener {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace<Fragment04>(R.id.fragment_view)
+            if (!checkFragment(Fragment04()) &&
+                (!checkBackStack("Fragment04"))
+            ) {
+                fm.commit {
+                    setReorderingAllowed(true)
+                    replace<Fragment04>(R.id.fragment_view)
+                    addToBackStack("Fragment04")
+                }
+            } else {
+                showWarning()
             }
         }
+
+        showBackStack.setOnClickListener {
+            showBackStack()
+        }
+
+        popBackStack.setOnClickListener {
+            fm.popBackStack()
+        }
+
+        saveBackStack.setOnClickListener {
+            fm.saveBackStack("Fragment02")
+        }
+
+        restoreBackStack.setOnClickListener {
+            fm.restoreBackStack("Fragment02")
+        }
+    }
+
+    private fun showWarning() {
+        Toast.makeText(
+            applicationContext,
+            "This Fragment is in Stack, or Attached",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun checkBackStack(fragment: String): Boolean {
+        var check = false
+        for (entry in 0 until fm.backStackEntryCount) {
+            if (fm.getBackStackEntryAt(entry).name == fragment) {
+                check = true
+            }
+        }
+        return check
+    }
+
+    private fun <T> checkFragment(fragment: T): Boolean {
+        val fragmentName = fragment!!::class.simpleName
+        return if (fm.findFragmentById(R.id.fragment_view) != null) {
+            try {
+                when (fragmentName) {
+                    "Fragment01" -> (fm.findFragmentById(R.id.fragment_view) as Fragment01).isAdded
+                    "Fragment02" -> (fm.findFragmentById(R.id.fragment_view) as Fragment02).isAdded
+                    "Fragment03" -> (fm.findFragmentById(R.id.fragment_view) as Fragment03).isAdded
+                    else -> (fm.findFragmentById(R.id.fragment_view) as Fragment04).isAdded
+                }
+            } catch (e: Exception) {
+                false
+            }
+        } else {
+            false
+        }
+    }
+
+    private fun showBackStack() {
+        var str = ""
+        for (entry in 0 until fm.backStackEntryCount) {
+            str = fm.getBackStackEntryAt(entry).name + "\n" + str
+        }
+        showTv.text = str
+    }
+
+    fun getValue(str: String) {
+        showTv.text = str
     }
 
     override fun onStart() {

@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 
 
 class Fragment01 : Fragment() {
     private lateinit var countBt: Button
+    private lateinit var textView: TextView
     private var count = 0
 
     companion object {
@@ -45,10 +47,17 @@ class Fragment01 : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.i(TAG, "${this::class.simpleName} onViewCreated: ")
         countBt = view.findViewById(R.id.countBt)
+        textView = view.findViewById(R.id.textView)
+
+//        val text = requireArguments().getString("text")
+        val text = arguments?.getString("text")
+        textView.text = text
+
         countBt.text = count.toString()
         countBt.setOnClickListener {
             count++
             countBt.text = count.toString()
+            (activity as MainActivity).getValue(count.toString())
         }
     }
 
